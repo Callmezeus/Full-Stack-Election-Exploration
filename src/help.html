@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Help!</title>
+  </head>
+  <style>
+  .bigger{
+    font-size:150%;
+  }
+</style>
+  <body> 
+    <h1>NON-SQL User</h1>
+    <h3>The textbox you are presented with at the main page can be treated as an SQL text editor. If you do not know how to write an SQL query, this may not be the best website for you. If you are one of those people, try inputting the following into the input box:</h3>
+    <h2>select State, Total_Votes, Democratic_Percent, Republican_Percent from Previous_Elections where Year=1972</h2>
+    <h3>As you may have noticed, the map changes colors according to your inputted year and hovering over states gives its respective State, Democratic Percent, Republican Percent, Independent Percent, and Other Percent for that respective year. If you want further use from this website, you need to understand how to write simple queries using SQL</h3>
+    <h3>--------------------------</h3>
+    <h1>SQL User</h1>
+    <h3>States that would normally have a space between them such as <span class ="bigger">New York</span> are instead called <span class ="bigger">NewYork</span> without the space, thus if you want to run a query with a state condition, it must follow this format:</h3>
+    <h2>select Year, State, Republican_Percent from Previous_Elections where State="NewYork"</h2>
+    <h3> If you do no use Year as a condition, the frontend map will default to the year 2016, this is purely for visuals ans will not affect your resultant table</h3>
+    <h3>All correct syntax attributes are listed below:</h3>
+    <h1>Table: Demographics</h1>
+    <h2>State | White_Percent | Black_Percent | Hispanic_Percent | Asian_Percent | AmericanIndian_Percent | NativeHawaiin_Percent | With_Children_Percent | Without_Children_Percent | Male_Percent | Female_Percent | Median_Income | Citizen_Percent | Non_Citizen_Percent | AdultsUnder55 | AdultsOver55 | FullTime_Percent | PartTime_Percent | Unemployed_Percent | Education_Rank | its primary key is {State}</h2>
+    <h1>Table: Previous_Elections</h1>
+    <h2>State | Total_Votes | Democratic_Percent | Republican_Percent | Independent_Percent | Other_Percent | Votes_Democratic | Votes_Republican | Votes_Other | Year | its primary key is {State, Year}</h2>
+    <h1>Table: Candidates</h1>
+    <h2>Name | Vice_President_Candidate | Party | Popular_Vote | Electoral_Votes | Year | its primary key is {Name, Year}</h2>
+    <h1>Relation: Winners {Candidates, Previous_Elections}(Join on Year)</h1>
+    <h2>Made by running: select c.name, c.Vice_President_Candidate, c.Party, c.Popular_Vote, p.Year from Previous_Elections p JOIN Candidates c ON p.Year = c.Year Where Electoral_Votes>270 GROUP BY p.Year</h2>
+    <h1>Relation: Polls {Demographics, Previous_Elections}(Join on State)</h1>
+  </body>
+</html>
+

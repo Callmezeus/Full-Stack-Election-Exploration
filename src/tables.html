@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Tables</title>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    </style>
+  </head>
+  <body> 
+    <script>
+      var tableHeaders;
+      var tableData;
+      $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/tableheaders",
+                async: false,
+                success: function (data) {
+                  tableHeaders = data;
+                  //console.log(tableHeaders.length);  how many headers
+                },
+                dataType: "json",
+              });
+        $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: "/tabledata",
+                async: false,
+                success: function (data) {
+                  tableData= data;
+                  //console.log(tableData);
+                  //console.log(tableData.length); how many rows
+                  //console.log(tableData[0].length); how many columns
+                },
+                dataType: "json",
+              });
+    </script>
+    <table>
+      <tr>
+        <script>
+          var insert= '';
+          var rows = tableHeaders.length;
+          for(var r =0;r <rows;r++){
+            insert+= '<th>'+tableHeaders[r]+'</th>';
+          }
+          document.write(insert);
+        </script>
+      </tr>
+      <script>
+          var insert='';
+          var rows = tableData.length;
+          var columns = tableData[0].length;
+          for(var r =0;r<rows;r++){
+            insert+= '<tr>';
+            for(var c =0;c<columns;c++){
+              insert+= '<td>'+tableData[r][c]+'</td>';  
+            }
+            insert+= '</tr>'
+          }
+          document.write(insert);
+      </script>
+    </table>
+  </body>
+</html>
+
