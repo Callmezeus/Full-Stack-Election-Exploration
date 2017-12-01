@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <div id="info-box"></div>
     <title><%= htmlWebpackPlugin.options.title %></title>
+
   </head>
   <body> 
   	<center>
@@ -896,17 +897,154 @@
   	          <text id="DC" transform="matrix(1 0 0 1 474 204)" cursor="pointer">
   	            <tspan x="0" y="0" font-family="'Arial'" font-size="10" fill="#ffffff">DC</tspan>
   	          </text>
+
   	        </g>
   	      </svg>
   	    </div>
   	  </div>
   	</div>
-    <textarea id="textbox" rows="6" cols="100">Hello and welcome to my webiste, if you are new here, hit the Help me! button...Otherwise, write some SQL queries.</textarea>
+    <div class="styled-select slate">
+      <select id="statsSelect">
+        <option  value="" disabled="disabled" selected="selected">I want to know about</option>
+        <option>Total_Votes</option>
+        <option>Democratic_Percent</option>
+        <option>Republican_Percent</option>
+        <option>Independent_Percent</option>
+        <option>Other_Percent</option>
+        <option>Votes_Democratic</option>
+        <option>Votes_Republican</option>
+        <option>Votes_independent</option>
+        <option>Votes_Other</option> 
+        <option>Winners of Elections</option>
+        <option>Demographics of a state</option>
+      </select>
+    </div>
+    <div id="winnerBox" class="styled-select slate" style="display: none">
+      <select id="winnerSelection">
+        <option  value="" disabled="disabled" selected="selected">Candidate</option>
+        <option>Woodrow Wilson</option>
+        <option>Warren Harding</option>
+        <option>Calvin Coolidg</option>
+        <option>Herbert Hoover</option>
+        <option>Franklin Roosevelt</option>
+        <option>Harry Truman</option>
+        <option>Dwight Eisenhower</option>
+        <option>John Kennedy</option>
+        <option>Lyndon Johnson</option>
+        <option>Richard Nixon</option>
+        <option>James Carter</option>
+        <option>Ronald Reagan</option>
+        <option>George Bush</option>
+        <option>William Clinton</option>
+        <option>George W. Bush</option>
+        <option>Barack H. Obama</option>
+        <option>Donald J. Trump</option>
+      </select>
+    </div>
+    <div  id="stateBox" class="styled-select slate" style="display: none">
+      <select id="stateSelection" >
+        <option  value="" disabled="disabled" selected="selected">State</option>
+          <option>ALL STATES</option>
+          <option>Alabama</option>
+          <option>Alaska</option>
+          <option>Arizona</option>
+          <option>Arkansas</option>
+          <option>California</option>
+          <option>Colorado</option>
+          <option>Connecticut</option>
+          <option>Delaware</option>
+          <option>D.C.</option>
+          <option>Florida</option>
+          <option>Georgia</option>
+          <option>Hawaii</option>
+          <option>Idaho</option>
+          <option>Illinois</option>
+          <option>Indiana</option>
+          <option>Iowa</option>
+          <option>Kansas</option>
+          <option>Kentucky</option>
+          <option>Louisiana</option>
+          <option>Maine</option>
+          <option>Maryland</option>
+          <option>Massachusetts</option>
+          <option>Michigan</option>
+          <option>Minnesota</option>
+          <option>Mississippi</option>
+          <option>Missouri</option>
+          <option>Montana</option>
+          <option>Nebraska</option>
+          <option>Nevada</option>
+          <option>NewHampshire</option>
+          <option>NewJersey</option>
+          <option>NewMexico</option>
+          <option>NewYork</option>
+          <option>NorthCarolina</option>
+          <option>NorthDakota</option>
+          <option>Ohio</option>
+          <option>Oklahoma</option>
+          <option>Oregon</option>
+          <option>Pennsylvania</option>
+          <option>RhodeIsland</option>
+          <option>SouthCarolina</option>
+          <option>SouthDakota</option>
+          <option>Tennessee</option>
+          <option>Texas</option>
+          <option>Utah</option>
+          <option>Vermont</option>
+          <option>Virginia</option>
+          <option>Washington</option>
+          <option>WestVirginia</option>
+          <option>Wisconsin</option>
+          <option>Wyoming</option>     
+      </select>
+    </div>
+    <div id ="yearBoxa" class="styled-select slate" style="display: none">
+      <select id="yearBoxSelection">
+        <option value="" disabled="disabled" selected="selected">Please Select a Year</option>
+        <option>ALL YEARS</option>
+        <option>2016</option>
+        <option>2012</option>
+        <option>2008</option>
+        <option>2004</option>
+        <option>2000</option>
+        <option>1996</option>
+        <option>1992</option>
+        <option>1988</option>
+        <option>1984</option>
+        <option>1980</option>
+        <option>1976</option>
+        <option>1972</option>
+        <option>1968</option>
+        <option>1964</option>
+        <option>1960</option>
+        <option>1956</option>
+        <option>1952</option>
+        <option>1948</option>
+        <option>1944</option>
+        <option>1940</option>
+        <option>1936</option>
+        <option>1932</option>
+        <option>1928</option>
+        <option>1924</option>
+        <option>1920</option>
+        <option>1916</option>
+        <option>1912</option>
+      </select>
+    </div>
+    <div id="percentInput" style="display: none">
+      <textarea id="percentInputText" placeholder=">= Percents are 0-100" id="testbox" rows="1" cols="28"></textarea>
+    </div>
+    <div id="realInput" style="display: none">
+      <textarea id="realInputText" placeholder=" >= Enter any REAL NUMBER value" id="testbox" rows="1" cols="28"></textarea>
+    </div>
+    <br/>
+    <textarea id="textbox" rows="4" cols="100" style="display: none">Hello and welcome to my webiste, click on the dropdown menu to begin your search, you will need to manually input the number or string to satisfy your "Where" condition, if you decide to use one. If you are still confused, hit the help me! button</textarea> 
     </center>
     <center>
-    	<button id ="submit" class ="button">Show Table of Query</button>
-    	<button id ="submitwp" class ="button">Submit Query Without Table</button>
-    	<button id ="help" class ="button">Help me!</button>
+    	<button id ="submit" class ="button">Show Results Table</button>
+    	<button id ="submitwp" class ="button">Update Map (Year must be in selection)</button>
+      <button id ="goToAdd" class ="button"> Add Data to Database</button>
+      <button id ="help" class ="button">Help me!</button>
   	</center>
   </body>
 </html>

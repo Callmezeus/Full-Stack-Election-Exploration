@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="app.bundle.js"></script>
+    <title>Add to the Database</title>
+    <style type="text/css">
+      .styled-select.slate {
+         background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+         height: 34px;
+         width: 240px;
+      }
+
+      .styled-select.slate select {
+         border: 1px solid #ccc;
+         font-size: 16px;
+         height: 34px;
+         width: 268px;
+      }
+      body {
+         background-color: gray;
+      }
+      textarea {
+          resize: none;
+      }
+      #us-map{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      path:hover, circle:hover {
+        stroke: #8d00ad !important;
+        stroke-width:2px;
+        stroke-linejoin: round;
+        fill: #8d00ad !important;
+        cursor: pointer;
+      }
+      #path67 {
+        fill: none !important;
+        stroke: #A9A9A9 !important;
+        cursor: default;
+      }
+      #info-box {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        background-color: #ffffff;
+        border: 2px solid #BF0A30;
+        border-radius: 5px;
+        padding: 5px;
+        font-family: arial;
+      }
+      .button {
+          background-color: #555555;
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+      }
+      h1 { 
+        color: #ffffff;
+        font-family: 'Lato', sans-serif;
+        font-size: 60px; 
+        font-weight: 400;
+        line-height: 50px;
+        margin: 0 0 0px;  
+       }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>Add a tuple to the database:</h1>
+      <br/>
+      <textarea id="textboxAdd" rows="4" cols="100" style="display: none"></textarea> 
+      <div class="styled-select slate">
+      <select id="statsSelectAdd">
+        <option  value="" disabled="disabled" selected="selected">Table I want to add to:</option>
+        <option>Previous_Elections</option>
+        <option>Demographics</option>
+        <option>Winners</option>
+      </select>
+    </div>
+    <div id ="yearBoxAdd" class="styled-select slate" style="display: none">
+      <select id="yearBoxSelectionAdd">
+        <option value="" disabled="disabled" selected="selected">Year: REQUIRED</option>
+        <option>2016</option>
+        <option>2012</option>
+        <option>2008</option>
+        <option>2004</option>
+        <option>2000</option>
+        <option>1996</option>
+        <option>1992</option>
+        <option>1988</option>
+        <option>1984</option>
+        <option>1980</option>
+        <option>1976</option>
+        <option>1972</option>
+        <option>1968</option>
+        <option>1964</option>
+        <option>1960</option>
+        <option>1956</option>
+        <option>1952</option>
+        <option>1948</option>
+        <option>1944</option>
+        <option>1940</option>
+        <option>1936</option>
+        <option>1932</option>
+        <option>1928</option>
+        <option>1924</option>
+        <option>1920</option>
+        <option>1916</option>
+        <option>1912</option>
+      </select>
+    </div>
+    <div id="stateBoxAdd" class="styled-select slate" style="display: none">
+      <select id="stateSelectionAdd" >
+        <option  value="" disabled="disabled" selected="selected">State: REQUIRED</option>
+          <option>Alabama</option>
+          <option>Alaska</option>
+          <option>Arizona</option>
+          <option>Arkansas</option>
+          <option>California</option>
+          <option>Colorado</option>
+          <option>Connecticut</option>
+          <option>Delaware</option>
+          <option>D.C.</option>
+          <option>Florida</option>
+          <option>Georgia</option>
+          <option>Hawaii</option>
+          <option>Idaho</option>
+          <option>Illinois</option>
+          <option>Indiana</option>
+          <option>Iowa</option>
+          <option>Kansas</option>
+          <option>Kentucky</option>
+          <option>Louisiana</option>
+          <option>Maine</option>
+          <option>Maryland</option>
+          <option>Massachusetts</option>
+          <option>Michigan</option>
+          <option>Minnesota</option>
+          <option>Mississippi</option>
+          <option>Missouri</option>
+          <option>Montana</option>
+          <option>Nebraska</option>
+          <option>Nevada</option>
+          <option>NewHampshire</option>
+          <option>NewJersey</option>
+          <option>NewMexico</option>
+          <option>NewYork</option>
+          <option>NorthCarolina</option>
+          <option>NorthDakota</option>
+          <option>Ohio</option>
+          <option>Oklahoma</option>
+          <option>Oregon</option>
+          <option>Pennsylvania</option>
+          <option>RhodeIsland</option>
+          <option>SouthCarolina</option>
+          <option>SouthDakota</option>
+          <option>Tennessee</option>
+          <option>Texas</option>
+          <option>Utah</option>
+          <option>Vermont</option>
+          <option>Virginia</option>
+          <option>Washington</option>
+          <option>WestVirginia</option>
+          <option>Wisconsin</option>
+          <option>Wyoming</option>     
+      </select>
+    </div>
+    <br/>
+    <div id="holderPE" style="display: none">
+      <div id="StateAdd">
+        <textarea id="State_Input" placeholder="Enter State Name" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Democratic_Percent">
+        <textarea id="Democratic_Percent_Input" placeholder="Enter Democratic Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Republican_Percent">
+        <textarea id="Republican_Percent_Input" placeholder="Enter Republican Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Independent_Percent">
+        <textarea id="Independent_Percent_Input" placeholder="Enter Independent Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Other_Percent">
+        <textarea id="Other_Percent_Input" placeholder="Enter Other Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Democratic_Votes">
+        <textarea id="Democratic_Votes_Input" placeholder="Enter total votes for Democrats notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Republican_Votes">
+        <textarea id="Republican_Votes_Input" placeholder="Enter total votes for Republican notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Independent_Votes">
+        <textarea id="Independent_Votes_Input" placeholder="Enter total votes for Independent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Other_Votes">
+        <textarea id="Other_Votes_Input" placeholder="Enter total votes for Other Party notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+    </div>
+
+    <div id="holderD" style="display: none">
+      <div id="StateAdd">
+        <textarea id="State_InputD" placeholder="Enter State Name" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="White_Percent">
+        <textarea id="White_Percent_Input" placeholder="Enter White Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Black_Percent">
+        <textarea id="Black_Percent_Input" placeholder="Enter Black Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Hispanic_Percent">
+        <textarea id="Hispanic_Percent_Input" placeholder="Enter Hispanic Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Asian_Percent">
+        <textarea id="Asian_Percent_Input" placeholder="Enter Asian Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="AmericanIndian_Percent">
+        <textarea id="AmericanIndian_Percent_Input" placeholder="Enter AmericanIndian Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="NativeHawaiin_Percent">
+        <textarea id="NativeHawaiin_Percent_Input" placeholder="Enter NativeHawaiin Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="With_Children_Percent">
+        <textarea id="With_Children_Percent_Input" placeholder="Enter With Children Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Without_Children_Percent">
+        <textarea id="Without_Children_Percent_Input" placeholder="Enter Without Children Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Male_Percent">
+        <textarea id="Male_Percent_Input" placeholder="Enter Male Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Female_Percent">
+        <textarea id="Female_Percent_Input" placeholder="Enter Female Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Median_Income">
+        <textarea id="Median_Income_Input" placeholder="Enter Median Income notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Citizen_Percent">
+        <textarea id="Citizen_Percent_Input" placeholder="Enter Citizen Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Non_Citizen_Percent">
+        <textarea id="Non_Citizen_Percent_Input" placeholder="Enter Non Citizen Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="AdultsUnder55">
+        <textarea id="AdultsUnder55_Input" placeholder="Enter Adults Under 55 Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="AdultsOver55">
+        <textarea id="AdultsOver55_Input" placeholder="Enter Adults Over 55 Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="FullTime_Percent">
+        <textarea id="FullTime_Percent_Input" placeholder="Enter FullTime Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="PartTime_Percent">
+        <textarea id="PartTime_Percent_Input" placeholder="Enter PartTime Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Unemployed_Percent">
+        <textarea id="Unemployed_Percent_Input" placeholder="Enter Unpemployed Percent notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Education_Rank">
+        <textarea id="Education_Rank_Input" placeholder="Enter Education Rank notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+    </div>
+    <div id="holderW" style="display: none">
+      <div id="Yearsdfsf">
+        <textarea id="Year_InputW" placeholder="Enter Year **Required" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="NameAdd">
+        <textarea id="Name_Input" placeholder="Enter Candidate Name **Required" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="VP">
+        <textarea id="VP_Input" placeholder="Enter Vice President Name notRequired" id="testbox" rows="1" cols="45"></textarea>
+      </div>
+      <div id="Party">
+        <textarea id="Party_Input" placeholder="Enter Party notRequired" id="testbox" rows="1" cols="45"></textarea>
+        <div id="Popular_Vote">
+          <textarea id="Popular_Vote_Input" placeholder="Enter Popular Vote notRequired" id="testbox" rows="1" cols="45"></textarea>
+        </div>
+      </div>
+    </div>
+    <button id="submitPE" style="display: none">Submit to Database</button>
+    <button id="submitD" style="display: none">Submit to Database</button>
+    <button id="submitW" style="display: none">Submit to Database</button>
+    </center>
+  </body>
+</html>
+

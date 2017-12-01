@@ -12,8 +12,7 @@ app.use(bodyParser.urlencoded({
 var textbox;
 var headers;
 var datums;
-var statesColorBox;
-
+var con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
 
 
 /*****************ROUTES********************/
@@ -32,6 +31,12 @@ app.get('/table.html', function(req,res){
 });
 app.get('/help.html', function(req,res){
 	res.sendFile(__dirname+ "/src/help.html");
+});
+app.get('/add.html', function(req,res){
+	res.sendFile(__dirname+ "/src/add.html");
+});
+app.get('/add.bundle.js', function(req, res){
+	res.sendFile(__dirname + "/dist/add.bundle.js");
 });
 app.post('/tableheaders', function(req,res){
 	headers=req.body.tableHeaders;
@@ -63,7 +68,7 @@ app.get('/query', function(req, res){
 /***********FUNCTIONS************/
 
 function doTestQuery(res){
-	const con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
+	con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
 	res.setHeader('Content-Type', 'application/json');
 	var array =[];
 	var i=0
@@ -178,7 +183,7 @@ function doStateColors(res){
 		if(textbox.includes("1912")){
 			year = 1912;
 		}
-		const con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
+		con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
 		res.setHeader('Content-Type', 'application/json');
 		var array =[];
 		var i=0
@@ -201,7 +206,7 @@ function doStateColors(res){
 
 	}else{
 		//defualt 2016 query
-		const con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
+		con = mysql.createConnection({host: 'cs336tl455db.cj0ps9gmurzy.us-east-1.rds.amazonaws.com', port: 3306, database:'test',user:'tl455cs336', password:'cs336tl455'});
 		res.setHeader('Content-Type', 'application/json');
 		var array =[];
 		var i=0

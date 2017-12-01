@@ -5,23 +5,202 @@ $(document).ready(function() {
 	var windowHeight = window.innerHeight;
 	var windowWidth = window.innerWidth;
 	var map = document.getElementById('map');
-	map.setAttribute("height", windowHeight/1.3);
-	map.setAttribute("width", windowWidth/1.1);
+	try {
+	map.setAttribute("height", windowHeight/1.6);
+	map.setAttribute("width", windowWidth/1.4);
+	}catch(err){
+		console.log("At Add to Database");
+	}
 	var text = document.getElementById('textbox');
 	var yearBox = document.getElementById('yearBox');
-	//console.log("Changes aren't realtime, but refresh is fine");
-	//console.log(text.value);
+	var statSelection = document.getElementById('statsSelect');
+
+	var winnerBox = document.getElementById('winnerBox');
+	var winnerSelection = document.getElementById('winnerSelection');
+
+	var stateBox = document.getElementById('stateBox');
+	var stateSelection = document.getElementById('stateSelection');
+
+	var percentInput = document.getElementById('percentInput');
+	var percentInputText = document.getElementById('percentInputText');
+	
+	var realInput = document.getElementById('realInput');
+	var realInputText = document.getElementById('realInputText');
+
+	var yearBoxa = document.getElementById('yearBoxa');
+	var yearBoxSelection = document.getElementById('yearBoxSelection');
+
+	var statsSelectAdd = document.getElementById('statsSelectAdd');
+
+	var yearBoxAdd = document.getElementById('yearBoxAdd');
+	var yearBoxSelectionAdd = document.getElementById('yearBoxSelectionAdd');
+
+	var stateBoxAdd = document.getElementById('stateBoxAdd');
+	var stateSelectionAdd = document.getElementById('stateSelectionAdd');
+
+	var holderPE = document.getElementById('holderPE');
+	var holderD = document.getElementById('holderD');
+	var holderW = document.getElementById('holderW');
+
+	var submitPE = document.getElementById('submitPE');
+
+	var State_Input = document.getElementById('State_Input');
+	var Democratic_Percent_Input = document.getElementById('Democratic_Percent_Input');
+	var Republican_Percent_Input = document.getElementById('Republican_Percent_Input');
+	var Independent_Percent_Input = document.getElementById('Independent_Percent_Input');
+	var Other_Percent_Input = document.getElementById('Other_Percent_Input');
+	var Democratic_Votes_Input = document.getElementById('Democratic_Votes_Input');
+	var Republican_Votes_Input = document.getElementById('Republican_Votes_Input');
+	var Independent_Votes_Input = document.getElementById('Independent_Votes_Input');
+	var Other_Votes_Input = document.getElementById('Other_Votes_Input');
+
+	var submitD = document.getElementById('submitD');
+
+	var State_InputD = document.getElementById('State_InputD');
+	var White_Percent_Input=document.getElementById('White_Percent_Input');
+	var Black_Percent_Input=document.getElementById('Black_Percent_Input');
+	var Hispanic_Percent_Input=document.getElementById('Hispanic_Percent_Input');
+	var Asian_Percent_Input=document.getElementById('Asian_Percent_Input');
+	var AmericanIndian_Percent_Input=document.getElementById('AmericanIndian_Percent_Input');
+	var NativeHawaiin_Percent_Input=document.getElementById('NativeHawaiin_Percent_Input');
+	var With_Children_Percent_Input=document.getElementById('With_Children_Percent_Input');
+	var Without_Children_Percent_Input=document.getElementById('Without_Children_Percent_Input');
+	var Male_Percent_Input=document.getElementById('Male_Percent_Input');
+	var Female_Percent_Input=document.getElementById('Female_Percent_Input');
+	var Median_Income_Input=document.getElementById('Median_Income_Input');
+	var Citizen_Percent_Input=document.getElementById('Citizen_Percent_Input');
+	var Non_Citizen_Percent_Input=document.getElementById('Non_Citizen_Percent_Input');
+	var AdultsUnder55_Input=document.getElementById('AdultsUnder55_Input');
+	var AdultsOver55_Input=document.getElementById('AdultsOver55_Input');
+	var FullTime_Percent_Input=document.getElementById('FullTime_Percent_Input');
+	var PartTime_Percent_Input=document.getElementById('PartTime_Percent_Input');
+	var Unemployed_Percent_Input=document.getElementById('Unemployed_Percent_Input');
+	var Education_Rank_Input=document.getElementById('Education_Rank_Input');
+
+	var submitW = document.getElementById('submitW');
+
+	var Name_Input = document.getElementById('Name_Input');
+	var VP_Input = document.getElementById('VP_Input');
+	var Party_Input =document.getElementById('Party_Input');
+	var Popular_Vote = document.getElementById('Popular_Vote');
+	var Year_InputW = document.getElementById('Year_InputW');
+	var textboxAdd = document.getElementById('textboxAdd');
+
+	$('#goToAdd').click(function(){
+		openInNewTab("/add.html");
+	});
+	$('#statsSelectAdd').change(function(){
+		yearBoxAdd.style.display ="none";
+		stateBoxAdd.style.display = "none";
+		holderPE.style.display = "none";
+		holderD.style.display = "none";
+		holderW.style.display = "none";
+		submitD.style.display = "none";
+		submitPE.style.display = "none"; 
+		submitW.style.display = "none";
+		if(statsSelectAdd.value == "Previous_Elections"){
+			yearBoxAdd.style.display = "block";
+		}else if(statsSelectAdd.value == "Demographics"){
+			holderD.style.display = "block";
+			submitD.style.display = "block";
+		}else if(statsSelectAdd.value == "Winners"){
+			holderW.style.display = "block";
+			submitW.style.display = "block";
+		}
+	});
+	$('#yearBoxAdd').change(function(){
+		if(statsSelectAdd.value == "Previous_Elections"){
+			holderPE.style.display = "block";
+			submitPE.style.display = "block";
+		}else if(statsSelectAdd.value == "Winners"){
+			holderW.style.display = "block";
+			submitW.style.display = "block";
+		}
+	});
+
+	$('#statsSelect').change(function(){
+		winnerBox.style.display = "none";
+		stateBox.style.display = "none";
+		percentInput.style.display = "none";
+		realInput.style.display = "none";
+		yearBoxa.style.display = "none";
+		realInputText.value="";
+		percentInputText.value="";
+		if(statSelection.value == "Winners of Elections"){
+			winnerBox.style.display = "block";
+			text.value = "select * from Winners";
+		}else if(statSelection.value == "Demographics of a state"){
+			stateBox.style.display = "block";
+			text.value = "select * from Demographics";
+		}else{
+			yearBoxa.style.display = "block";
+			if(statSelection.value.includes("Percent")){
+				percentInput.style.display = "block";
+				if(yearBoxSelection.value!="ALL YEARS"){
+					text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year = " + yearBoxSelection.value ;
+				}else{
+					text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year >= 1912";
+				}
+			}else{
+				realInput.style.display = "block";
+				if(yearBoxSelection.value!="ALL YEARS"){
+					text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year = " + yearBoxSelection.value ;
+				}else{
+					text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year >= 1912";
+				}
+			}
+			
+		}
+
+
+	});
+	$('#winnerBox').change(function(){
+		text.value = "select * from Candidates where Name = '" + winnerSelection.value + "'";
+	});
+	$('#stateBox').change(function(){
+		if(stateSelection.value == "ALL STATES"){
+			text.value = "select * from Demographics";
+		}else{
+			text.value = "select * from Demographics where State = '" + stateSelection.value + "'";
+		}
+	});
+	$('#yearBoxa').change(function(){
+		if(yearBoxSelection.value!="ALL YEARS"){
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year = " + yearBoxSelection.value;
+		}else{
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year >= 1912";
+		}
+	});
+	$('#realInputText').keyup(function(){
+		if(yearBoxSelection.value!="ALL YEARS"){
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year = " + yearBoxSelection.value + " AND " + statSelection.value + " >= " +realInputText.value;
+		}else{
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year >= 1912" + " AND " + statSelection.value + " >= " +realInputText.value;
+		}
+	});
+	$('#percentInputText').keyup(function(){
+		if(yearBoxSelection.value!="ALL YEARS"){
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year = " + yearBoxSelection.value + " AND " + statSelection.value + " >= " +percentInputText.value;
+		}else{
+			text.value = "select Year, State, " + statSelection.value + " from Previous_Elections " + "where Year >= 1912" + " AND " + statSelection.value + " >= " +percentInputText.value;
+		}
+	});
+
 	setInterval(function(){
 		windowHeight = window.innerHeight;
 		windowWidth = window.innerWidth;
-	  	map.setAttribute("height", windowHeight/1.35);
-	  	map.setAttribute("width", windowWidth/1.1);
+	  	try {
+	  		map.setAttribute("height", windowHeight/1.6);
+	  		map.setAttribute("width", windowWidth/1.4);
+	  	} catch (err){
+	  		
+	  	}
 	  },100);
 	var responseFeed;
 	var tableHeaders=[];
 	var dataTable=[[]];
 	var statesData;
-
+	try{
 	var AL = document.getElementById('map_1');
 	AL.name = "Alabama";
 	AL.visited = false;
@@ -183,6 +362,206 @@ $(document).ready(function() {
 	/*for(var i=0;i<states.length;i++){
 		console.log(states[i].name);
 	}*/
+	}catch (err){
+	}
+	$('#submitW').click(function(e){
+		if(Year_InputW.value.length==0){
+			alert("Year cannot be empty");
+			return;
+		}
+		if(Year_InputW.value %4==0){
+			alert("Cannot add existing year to table");
+			return;
+		}
+		if(Name_Input.value.length==0){
+			alert("Candidate Name cannot be empty!");
+			return;
+		}
+		if(VP_Input.value.length==0){
+			VP_Input.value= "NO VP";
+		}
+		if(Party_Input.value.length==0){
+			Party_Input.value= "NO PARTY";
+		}
+		if(Popular_Vote_Input.value.length==0){
+			Popular_Vote_Input.value=0;
+		}
+		textboxAdd.value="INSERT INTO Winners(Name, Vice_President_Candidate, Party, Popular_Vote, Year) Values('"+Name_Input.value+"', '"+VP_Input.value+"', '"+Party_Input.value+"', "+ Popular_Vote_Input.value+", "+ Year_InputW.value+")";
+			$.ajax({
+			    type: "POST",
+			    method: "POST",
+			    url: '/query',
+			    async: false,
+			    data: {textbox: textboxAdd.value},
+			    success: function(){
+			    	console.log("Success");
+			    },
+			    error: function(){
+			    	alert("An error occured!");
+			    },
+			    dataType: "json",
+			});
+			$.ajax({
+		      type: "GET",
+		      contentType: "application/json; charset=utf-8",
+		      url: "/test",
+		      async: false,
+		      success: function (data) {
+		      	alert("Tuple successfully added, Feel free to close this tab or choose another table to add to to restart the process. You can also see your addition if you view the table that holds it");
+		      },
+			  error: function(){
+			    	alert("An error occured!");
+			  }
+			});
+	});
+	$('#submitD').click(function(e){
+		e.preventDefault();
+		if(State_InputD.value.length==0){
+			State_InputD.value = "No Name";
+		}
+		if(White_Percent_Input.value.length==0){
+			White_Percent_Input.value=0;
+		}
+		if(Black_Percent_Input.value.length==0){
+			Black_Percent_Input.value=0;
+		}
+		if(Hispanic_Percent_Input.value.length==0){
+			Hispanic_Percent_Input.value=0;
+		}
+		if(Asian_Percent_Input.value.length==0){
+			Asian_Percent_Input.value=0;
+		}
+		if(AmericanIndian_Percent_Input.value.length==0){
+			AmericanIndian_Percent_Input.value=0;
+		}
+		if(NativeHawaiin_Percent_Input.value.length==0){
+			NativeHawaiin_Percent_Input.value=0;
+		}
+		if(With_Children_Percent_Input.value.length==0){
+			With_Children_Percent_Input.value=0;
+		}
+		if(Without_Children_Percent_Input.value.length==0){
+			Without_Children_Percent_Input.value=0;
+		}
+		if(Male_Percent_Input.value.length==0){
+			Male_Percent_Input.value=0;
+		}
+		if(Female_Percent_Input.value.length==0){
+			Female_Percent_Input.value=0;
+		}
+		if(Median_Income_Input.value.length==0){
+			Median_Income_Input.value=0;
+		}
+		if(Citizen_Percent_Input.value.length==0){
+			Citizen_Percent_Input.value=0;
+		}
+		if(Non_Citizen_Percent_Input.value.length==0){
+			Non_Citizen_Percent_Input.value=0;
+		}
+		if(AdultsUnder55_Input.value.length==0){
+			AdultsUnder55_Input.value=0;
+		}
+		if(AdultsOver55_Input.value.length==0){
+			AdultsOver55_Input.value=0;
+		}
+		if(FullTime_Percent_Input.value.length==0){
+			FullTime_Percent_Input.value=0;
+		}
+		if(PartTime_Percent_Input.value.length==0){
+			PartTime_Percent_Input.value=0;
+		}
+		if(Unemployed_Percent_Input.value.length==0){
+			Unemployed_Percent_Input.value=0;
+		}
+		if(Education_Rank_Input.value.length==0){
+			Education_Rank_Input.value=0;
+		}
+		textboxAdd.value="INSERT INTO Demographics(State, White_Percent, Black_Percent, Hispanic_Percent, Asian_Percent, AmericanIndian_Percent, NativeHawaiin_Percent, With_Children_Percent, Without_Children_Percent, Male_Percent, Female_Percent, Median_Income, Citizen_Percent, Non_Citizen_Percent, AdultsUnder55, AdultsOver55, FullTime_Percent, PartTime_Percent, Unemployed_Percent, Education_Rank) Values("+"'"+State_InputD.value+"'"+", "+White_Percent_Input.value+", "+ Black_Percent_Input.value+", " + Hispanic_Percent_Input.value + ", " + Asian_Percent_Input.value+", " + AmericanIndian_Percent_Input.value +", " + NativeHawaiin_Percent_Input.value+", "+With_Children_Percent_Input.value+", "+Without_Children_Percent_Input.value+", "+Male_Percent_Input.value+", "+Female_Percent_Input.value+", "+Median_Income_Input.value+", "+ Citizen_Percent_Input.value+", " + Non_Citizen_Percent_Input.value+", "+ AdultsUnder55_Input.value+", "+AdultsOver55_Input.value+", "+FullTime_Percent_Input.value+", "+PartTime_Percent_Input.value+", "+ Unemployed_Percent_Input.value+", "+Education_Rank_Input.value+")";
+			$.ajax({
+			    type: "POST",
+			    method: "POST",
+			    url: '/query',
+			    async: false,
+			    data: {textbox: textboxAdd.value},
+			    success: function(){
+			    	console.log("Success");
+			    },
+			    error: function(){
+			    	alert("An error occured!");
+			    },
+			    dataType: "json",
+			});
+			$.ajax({
+		      type: "GET",
+		      contentType: "application/json; charset=utf-8",
+		      url: "/test",
+		      async: false,
+		      success: function (data) {
+		      	alert("Tuple successfully added, Feel free to close this tab or choose another table to add to to restart the process. You can also see your addition if you view the table that holds it");
+		      },
+			  error: function(){
+			    	alert("An error occured!");
+			  }
+			});
+	});
+	$('#submitPE').click(function(e){
+		e.preventDefault();
+		if(State_Input.value.length==0){
+			State_Input.value = "No Name";
+		}
+		if(Democratic_Percent_Input.value.length==0){
+			Democratic_Percent_Input.value =0;
+		}
+		if(Republican_Percent_Input.value.length==0){
+			Republican_Percent_Input.value =0;
+		}
+		if(Independent_Percent_Input.value.length==0){
+			Independent_Percent_Input.value =0;
+		}
+		if(Other_Percent_Input.value.length==0){
+			Other_Percent_Input.value =0;
+		}
+		if(Democratic_Votes_Input.value.length==0){
+			Democratic_Votes_Input.value =0;
+		}
+		if(Republican_Votes_Input.value.length==0){
+			Republican_Votes_Input.value =0;
+		}
+		if(Independent_Votes_Input.value.length==0){
+			Independent_Votes_Input.value =0;
+		}
+		if(Other_Votes_Input.value.length==0){
+			Other_Votes_Input.value =0;
+		}
+		textboxAdd.value="INSERT INTO Previous_Elections(State, Total_Votes, Democratic_Percent, Republican_Percent, Independent_Percent, Other_Percent, Votes_Democratic, Votes_Republican, Votes_Independent, Votes_Other, Year) Values('" +State_Input.value+ "', 0,"+Democratic_Percent_Input.value+", "+Republican_Percent_Input.value+", "+Independent_Percent_Input.value+", "+Other_Percent_Input.value+", "+Democratic_Votes_Input.value+", "+Republican_Votes_Input.value+", "+Independent_Votes_Input.value+", "+Other_Votes_Input.value+", "+yearBoxSelectionAdd.value+")";
+		$.ajax({
+		    type: "POST",
+		    method: "POST",
+		    url: '/query',
+		    async: false,
+		    data: {textbox: textboxAdd.value},
+		    success: function(){
+		    	console.log("Success");
+		    },
+		    error: function(){
+		    	alert("An error occured!");
+		    },
+		    dataType: "json",
+		});
+		$.ajax({
+	      type: "GET",
+	      contentType: "application/json; charset=utf-8",
+	      url: "/test",
+	      async: false,
+	      success: function (data) {
+	      	alert("Tuple successfully added, Feel free to close this tab or choose another table to add to to restart the process. You can also see your addition if you view the table that holds it");
+	      },
+		  error: function(){
+		    	alert("An error occured!");
+		  }
+	  });
+
+	});
 	$('#submit').click(function(e) {
 	    e.preventDefault();
 	    if(text.value.toLowerCase().includes("drop")){
