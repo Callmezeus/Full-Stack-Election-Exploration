@@ -3,4 +3,4 @@ Front End, Back End, source code for a website that is used to explore data asso
 
 The website will not be running as I'm not going to be paying for Amazon RDS subscriptions.
 
-All data is pulled from  https://uselectionatlas.org/RESULTS/national.php Any tuples that you may notice that are "Odd" or "Funny" have been inputted by users of this website and were not inputted in creation.
+All data is pulled from  https://uselectionatlas.org/RESULTS/national.php
