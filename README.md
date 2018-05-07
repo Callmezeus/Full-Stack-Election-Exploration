@@ -4,3 +4,5 @@ Front End, Back End, source code for a website that is used to explore data asso
 The website will not be running as I've taken down the Amazon RDS/AWS
 
 All data is pulled from  https://uselectionatlas.org/RESULTS/national.php
+
+Code is a tad spaghetti as this was a school project; thus it was protoype-and-go.
